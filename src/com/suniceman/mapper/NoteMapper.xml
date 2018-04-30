@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.suniceman.mapper.NoteMapper">
+
+	<insert id="create" parameterType="Note">
+		insert into note(title, content, userId,categoryId, createdTime)
+		values(#{title}, #{content}, #{userId}, #{categoryId}, NOW())
+	</insert>
+	<select id="findByCategoryId" parameterType="int" resultType="Note">
+		select * from note where categoryId = #{categoryId}
+	</select>
+	<delete id="del" parameterType="int">
+		delete from note where id = #{id}
+	</delete>
+	<select id="findById" parameterType="int" resultType="Note">
+	  select * from note where id = #{id}
+	</select>
+	<update id="updateNote" parameterType="Note">
+	 update note set categoryId = #{categoryId}, title = #{title}, content=#{content} where id = #{id}
+	</update>
+	<delete id="deleteByCategoryId" parameterType="int">
+	  delete from note where categoryId = #{categoryId}
+	</delete>
+</mapper>
+

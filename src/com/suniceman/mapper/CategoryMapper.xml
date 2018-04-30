@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.suniceman.mapper.CategoryMapper">
+
+    
+    <insert id="save" parameterType="Category">
+      insert into category(categoryName, `desc`, userId, createdTime) values(#{categoryName}, #{desc}, #{userId}, NOW())
+    </insert>
+    
+    <select id="findByUserId" parameterType="int" resultType="Category">
+      select * from category where userId = #{userId}
+    </select>
+    <delete id="del" parameterType="int">
+      delete from category where id = #{id}
+    </delete>
+    <update id="update" parameterType="Category">
+      update category set categoryName = #{categoryName}, `desc` = #{desc} where id = #{id}
+    </update>
+</mapper>
+

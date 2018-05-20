@@ -256,51 +256,50 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         content:"用户名已经存在"
                     });
                 }
+                if(flag){
+                    return false;
+                }else{//注册
+                    $.ajax({
+                        headers: { 
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json' 
+                        },
+                        type : "POST",
+                        url : "${pageContext.request.contextPath}/user/register.action",
+                        data : JSON.stringify({
+                            name: username,
+                            password: password,
+                            email: email
+                        }),
+                        dataType : 'json',
+                        success : function(resData) {
+                            if (resData.status === 'ok') {
+                                spop({          
+                                    template: '<h4 class="spop-title">注册成功</h4>即将于3秒后返回登录',
+                                    position: 'top-center',
+                                    style: 'success',
+                                    autoclose: 3000,
+                                    onOpen : function(){
+                                        var second = 2;
+                                        var showPop = setInterval(function(){
+                                            if(second == 0){
+                                                clearInterval(showPop);
+                                            }
+                                            $('.spop-body').html('<h4 class="spop-title">注册成功</h4>即将于'+second+'秒后返回登录');
+                                            second--;
+                                        },1000);
+                                    },
+                                    onClose : function(){
+                                        goto_login();
+                                    }
+                                });
+                                return false;
+                            }
+                        }
+                    });
+                }
             }
         });
-        
-        if(flag){
-            return false;
-        }else{//注册
-            $.ajax({
-                headers: { 
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json' 
-                },
-                type : "POST",
-                url : "${pageContext.request.contextPath}/user/register.action",
-                data : JSON.stringify({
-                	name: username,
-                	password: password,
-                	email: email
-                }),
-                dataType : 'json',
-                success : function(resData) {
-                    if (resData.status === 'ok') {
-                        spop({          
-                            template: '<h4 class="spop-title">注册成功</h4>即将于3秒后返回登录',
-                            position: 'top-center',
-                            style: 'success',
-                            autoclose: 3000,
-                            onOpen : function(){
-                                var second = 2;
-                                var showPop = setInterval(function(){
-                                    if(second == 0){
-                                        clearInterval(showPop);
-                                    }
-                                    $('.spop-body').html('<h4 class="spop-title">注册成功</h4>即将于'+second+'秒后返回登录');
-                                    second--;
-                                },1000);
-                            },
-                            onClose : function(){
-                                goto_login();
-                            }
-                        });
-                        return false;
-                    }
-                }
-            });
-        }
     }
 </script>
 <style type="text/css">
